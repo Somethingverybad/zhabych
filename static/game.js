@@ -154,10 +154,19 @@ function updateGame() {
 
     frog.draw();
 
+
     ctx.fillStyle = "black";
-    ctx.font = `${canvas.width * 0.04}px Courier`;
-    ctx.fillText(`Очки: ${score}`, 10, 30);
-    ctx.fillText(`Жизни: ${lives}`, 10, 60);
+    ctx.font = `${canvas.width * 0.04}px Arial`;
+    ctx.textBaseline = "top";
+
+// Очки (слева сверху)
+    ctx.fillText(`🐝 х ${score}`, 10, 10);
+
+// Жизни (справа сверху)
+    const frogEmoji = '🐸'.repeat(lives);
+    const textWidth = ctx.measureText(frogEmoji).width;
+    ctx.fillText(frogEmoji, canvas.width - textWidth - 10, 10);
+    
 }
 
 function showEndMessage(text) {
