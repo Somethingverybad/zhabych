@@ -169,11 +169,22 @@ function updateGame() {
     
 }
 
+const submessage = document.getElementById("submessage");
+
 function showEndMessage(text) {
     isGameOver = true;
     message.textContent = text;
     overlay.style.display = "flex";
+
+    // Добавим дополнительный текст, только если победа
+    if (text.includes("накормлен")) {
+        submessage.textContent = "Заглушка: в будущем здесь будет статистика или шутка 🐸";
+    } else {
+        submessage.textContent = ""; // скрываем, если проигрыш
+    }
 }
+
+
 restartBtn.addEventListener("click", () => {
     resetGame();
     overlay.style.display = "none";
