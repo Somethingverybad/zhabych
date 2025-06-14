@@ -1,6 +1,6 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-const frogMarginBottom = 20;
+const frogMarginBottom = 60;
 const frogAspectRatio = 30 / 22; // ≈1.36
 
 // Заглушки
