@@ -85,14 +85,14 @@ const OBJECT_TYPES = {
 };
 
 function spawnObject() {
-    const type = Math.random() < 0.3 ? OBJECT_TYPES.FLY : OBJECT_TYPES.DANGER;
+    const type = Math.random() < 0.2 ? OBJECT_TYPES.FLY : OBJECT_TYPES.DANGER;
     const size = canvas.width * 0.07; // адаптивный размер
     objects.push({
         x: Math.random() * (canvas.width - size),
         y: -size,
         width: size,
         height: size,
-        speed: canvas.height * 0.005 + Math.random() * 2,
+        speed: canvas.height * 0.005 + Math.random() * 5,
         type: type
     });
 }
@@ -138,7 +138,7 @@ function updateGame() {
         if (checkCollision(obj)) {
             if (obj.type === OBJECT_TYPES.FLY) {
                 score++;
-                if (score >= 10) {
+                if (score >= 25) {
                     showEndMessage("Лягушонок накормлен!🎉🐸");
                     return;
                 }
