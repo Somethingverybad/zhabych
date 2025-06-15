@@ -6,6 +6,9 @@ const frogAspectRatio = 30 / 22; // ≈1.36
 // Заглушки
 const frogImg = new Image();
 frogImg.src = "static/img/frog.png";
+
+const gif = new Image();
+gif.src = "static/img/success.gif";
 const leafImg = new Image();
 leafImg.src = "static/img/leaf.png"; // путь в Flask-проекте
 
@@ -178,7 +181,7 @@ function showEndMessage(text) {
 
     // Добавим дополнительный текст, только если победа
     if (text.includes("накормлен")) {
-        submessage.textContent = "Заглушка: в будущем здесь будет статистика или шутка 🐸";
+        submessage.textContent = "Заглушка: в будущем здесь будет статистика или шутка 🐸 "+"<img src = '/static/img/success.gif'>";
     } else {
         submessage.textContent = ""; // скрываем, если проигрыш
     }

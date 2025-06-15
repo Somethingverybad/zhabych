@@ -19,7 +19,7 @@ html, body {
 canvas {
     display: block;
     width: 100vw;
-    height: 100vh;
+    height: 90vh;
 }
 #overlay {
     position: absolute;
@@ -52,7 +52,7 @@ canvas {
     background-color: #45a049;
 }
 
-#message {
+#message #submessage {
     font-family: 'Arial', cursive, sans-serif;
     font-size: 0.5em;
     color: white;
