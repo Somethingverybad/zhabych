@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>4 Картинки – 1 Слово</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #121212;
+      --card-bg: #1e1e1e;
+      --text-color: #f0f0f0;
+      --accent: #4dabf7;
+      --input-bg: #2a2a2a;
+      --border-color: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-color);
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .image-grid img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 10px;
+      background: #2a2a2a;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--input-bg);
+      color: var(--text-color);
+      margin-bottom: 15px;
+    }
+
+    input::placeholder {
+      color: #888;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #339af0;
+    }
+
+    #result {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      input, button {
+        font-size: 15px;
+      }
+
+      .image-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Угадай слово</h2>
+
+  <div class="image-grid">
+    <img src="/static/img/vr/img1.jpg" alt="Картинка 1" id="img1">
+    <img src="/static/img/vr/img2.jpg" alt="Картинка 2" id="img2">
+    <img src="/static/img/vr/img3.jpg" alt="Картинка 3" id="img3">
+    <img src="/static/img/vr/img4.jpg" alt="Картинка 4" id="img4">
+  </div>
+
+  <input type="text" id="userAnswer" placeholder="Введите слово..." />
+
+  <button onclick="checkAnswer()">Проверить</button>
+  <p id="result"></p>
+</div>
+
+<script>
+  // Верный ответ (можно заменить или загрузить из массива)
+  const correctAnswer = "веранда";
+
+  function checkAnswer() {
+    const userInput = document.getElementById("userAnswer").value.trim().toLowerCase();
+    const result = document.getElementById("result");
+
+    if (userInput === correctAnswer.toLowerCase()) {
+      result.textContent = "✅ Верно!";
+      result.style.color = "lightgreen";
+    } else {
+      result.textContent = "❌ Неправильно. Попробуйте ещё.";
+      result.style.color = "tomato";
+    }
+  }
+</script>
+
+</body>
+</html>
