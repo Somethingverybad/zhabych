@@ -179,19 +179,22 @@ function showEndMessage(text) {
     message.textContent = text;
     overlay.style.display = "flex";
 
-    // Добавим дополнительный текст, только если победа
     if (text.includes("накормлен")) {
-        submessage.textContent = "Заглушка: в будущем здесь будет статистика или шутка 🐸 ";
+        submessage.innerHTML = `
+            <p>Заглушка: в будущем здесь будет статистика или шутка 🐸</p>
+            <img src="static/img/success.gif" alt="Success" style="max-width: 80%; margin-top: 20px;" />
+        `;
     } else {
-        submessage.textContent = ""; // скрываем, если проигрыш
+        submessage.innerHTML = "";
     }
 }
+
 
 
 restartBtn.addEventListener("click", () => {
     resetGame();
     overlay.style.display = "none";
-    submessage.textContent = ""; // очищаем
+    submessage.innerHTML = ""; // очищаем всё
     isGameOver = false;
 });
 
