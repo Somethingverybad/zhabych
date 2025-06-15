@@ -6,7 +6,7 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route("zg1/")
+@app.route("/zg1/")
 def zagadka1():
      return render_template("zagadka1.html")
 
