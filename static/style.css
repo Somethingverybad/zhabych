@@ -52,7 +52,13 @@ canvas {
     background-color: #45a049;
 }
 
-#message #submessage {
+#message  {
+    font-family: 'Arial', cursive, sans-serif;
+    font-size: 0.5em;
+    color: white;
+    text-align: center;
+}
+#submessage {
     font-family: 'Arial', cursive, sans-serif;
     font-size: 0.5em;
     color: white;
