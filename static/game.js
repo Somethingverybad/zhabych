@@ -84,8 +84,24 @@ const OBJECT_TYPES = {
     LEAVES: "leaves"
 };
 
+let bigRock = false;
+
+function bigRockSpawning() {
+    if (bigRock) return;
+    const type = OBJECT_TYPES.DANGER;
+    const size = canvas.width * 0.7;
+    objects.push({
+        x: Math.random() * (canvas.width - size),
+        y: -size,
+        width: size,
+        height: size,
+        speed: canvas.height * 0.005 + Math.random() * 0.05,
+        type: type
+    });
+}
 function spawnObject() {
     const type = Math.random() < 0.2 ? OBJECT_TYPES.FLY : OBJECT_TYPES.DANGER;
+    if (Math.random() < 0.1) bigRockSpawning();
     const size = canvas.width * 0.07; // адаптивный размер
     objects.push({
         x: Math.random() * (canvas.width - size),
