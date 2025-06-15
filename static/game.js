@@ -89,7 +89,7 @@ let bigRock = false;
 function bigRockSpawning() {
     if (bigRock) return;
     const type = OBJECT_TYPES.DANGER;
-    const size = canvas.width * 0.7;
+    const size = canvas.width * 0.5;
     objects.push({
         x: Math.random() * (canvas.width - size),
         y: -size,
