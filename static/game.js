@@ -182,7 +182,7 @@ function showEndMessage(text) {
     if (text.includes("накормлен")) {
         submessage.innerHTML = `
             <p>Заглушка: в будущем здесь будет статистика или шутка 🐸</p>
-            <img src="static/img/success.gif" alt="Success" style="max-width: 80%; margin-top: 20px;" />
+            <img src="static/img/success1.gif" alt="Success" style="max-width: 80%; margin-top: 20px;" />
         `;
     } else {
         submessage.innerHTML = "";
