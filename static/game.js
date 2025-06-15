@@ -188,8 +188,10 @@ function showEndMessage(text) {
 restartBtn.addEventListener("click", () => {
     resetGame();
     overlay.style.display = "none";
+    submessage.textContent = ""; // очищаем
     isGameOver = false;
 });
+
 
 function gameLoop() {
     updateGame();
