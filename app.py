@@ -32,6 +32,10 @@ def zagadka3():
 def associative1():
     return render_template("associative1.html")
 
+@app.route("/go/")
+def go():
+    return render_template("leaves.html")
+
 @app.route("/assoc2/")
 def associative2():
     return render_template("associative2.html")
@@ -47,6 +51,19 @@ def photo_upload_page1():
 @app.route("/photo_upload_2/")
 def photo_upload_page2():
     return render_template("photo_upload_2.html")  # страница с загрузкой фото
+
+@app.route("/step1/")
+def step1():
+    return render_template("step1.html")  # Банка с землей
+
+
+@app.route("/step2/")
+def step2():
+    return render_template("step2.html")  # Морозилка
+
+@app.route("/step3/")
+def step3():
+    return render_template("step3.html")  # Вода
 
 @app.route("/photo_upload_3/")
 def photo_upload_page3():

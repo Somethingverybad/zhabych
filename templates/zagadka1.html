@@ -162,18 +162,10 @@
         const userAns = document.getElementById("userAnswer").value.trim();
 
         const result = document.getElementById("result");
-        if (joined === riddle && (userAns.toLowerCase() === correctAnswer.toLowerCase() ||
+        if ((userAns.toLowerCase() === correctAnswer.toLowerCase() ||
             userAns.toLowerCase() === altCorrectAnswer.toLowerCase())) {
-            result.textContent = "✅ Верно! Загадка и ответ правильные.";
+            result.textContent = "✅ Верно!";
             result.style.color = "green";
-        } else if(joined !== riddle){
-            result.textContent = "❌ Загадка собрана неверно. Попробуйте ещё раз.";
-            result.style.color = "red";
-
-        } else if(userAns.toLowerCase() !== correctAnswer.toLowerCase() &&
-            userAns.toLowerCase() !== altCorrectAnswer.toLowerCase()){
-            result.textContent = "❌ Загадка собрана верно, но ответ не верный. Попробуйте еще раз";
-            result.style.color = "red";
         } else {
             result.textContent = "❌ Неверно. Попробуйте ещё раз.";
             result.style.color = "red";
