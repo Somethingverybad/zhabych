@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Игра: Собери загадку</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
     <style>
         body {
@@ -25,6 +26,10 @@
         h2 {
             text-align: center;
             color: #333;
+        }
+        
+        p {
+            text-align: center;
         }
 
         .words-container, .answer-area {
@@ -100,7 +105,7 @@
 
 <div class="container">
     <h2>Собери загадку</h2>
-
+    <p>(Слова можно перетаскивать)</p>
     <div id="shuffledWords" class="words-container"></div>
 
     <h3>Собранная загадка:</h3>
@@ -164,7 +169,7 @@
         const result = document.getElementById("result");
         if ((userAns.toLowerCase() === correctAnswer.toLowerCase() ||
             userAns.toLowerCase() === altCorrectAnswer.toLowerCase())) {
-            result.textContent = "✅ Верно!";
+            result.textContent = "✅ Верно! Следующий лягушонок где-то там...";
             result.style.color = "green";
         } else {
             result.textContent = "❌ Неверно. Попробуйте ещё раз.";
