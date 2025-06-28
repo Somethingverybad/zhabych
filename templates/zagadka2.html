@@ -22,9 +22,12 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.05);
         }
 
-        h2 {
+        h2  {
             text-align: center;
             color: #333;
+        }
+        p {
+            text-align: center;
         }
 
         .words-container, .answer-area {
@@ -100,7 +103,7 @@
 
 <div class="container">
     <h2>Собери загадку</h2>
-
+    <p>(Слова можно перетаскивать)</p>
     <div id="shuffledWords" class="words-container"></div>
 
     <h3>Собранная загадка:</h3>
@@ -164,7 +167,7 @@
         const result = document.getElementById("result");
         if ((userAns.toLowerCase() === correctAnswer.toLowerCase() ||
             userAns.toLowerCase() === altCorrectAnswer.toLowerCase())) {
-            result.textContent = "✅ Верно!";
+            result.textContent = "✅ Верно! Следующий лягушонок где-то там...";
             result.style.color = "green";
         } else {
             result.textContent = "❌ Неверно. Попробуйте ещё раз.";

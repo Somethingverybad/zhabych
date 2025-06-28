@@ -7,7 +7,7 @@ app.config['UPLOAD_FOLDER'] = 'uploads'  # папка для временных 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 # 🔐 Telegram настройки
-TELEGRAM_BOT_TOKEN = "8157630049:AAEXE8sU-Nr9I0l6FDLZxBj98NZ93kGDsMw"
+TELEGRAM_BOT_TOKEN = "5860471491:AAGbYiQVM2wXkRk1PRct6ZnMchtkEqeBRyk"
 TELEGRAM_CHAT_ID = "1423772931"
 
 
@@ -47,6 +47,19 @@ def associative3():
 @app.route("/photo_upload_1/")
 def photo_upload_page1():
     return render_template("photo_upload_1.html")  # страница с загрузкой фото
+
+
+@app.route("/room1/")
+def room1():
+    return render_template("room1.html")  # фото комнаты 1
+
+@app.route("/room2/")
+def room2():
+    return render_template("room2.html")  # фото комнаты 2
+
+@app.route("/room3/")
+def room3():
+    return render_template("room3.html")  # фото комнаты 3
 
 @app.route("/photo_upload_2/")
 def photo_upload_page2():
