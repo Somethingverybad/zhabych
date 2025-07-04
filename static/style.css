@@ -7,13 +7,11 @@ canvas {
     display: block;
 }
 html, body {
+    background-image: url("img/tetradka.jpg");
+    background-attachment: fixed; /* Фиксирует фон при прокрутке */
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    touch-action: none;
-    height: 100vh;     /* 100% высоты видимой области */
-    width: 100vw;      /* 100% ширины видимой области */
-    background-color: #50831a;
+    min-height: 50vh; /* Гарантирует, что фон покрывает всю высоту экрана */
 }
 
 canvas {

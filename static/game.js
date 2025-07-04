@@ -1,7 +1,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const frogMarginBottom = 120;
-const frogAspectRatio = 30 / 22; // ≈1.36
+const frogAspectRatio = 0.29; // ≈1.36
 
 // Заглушки
 const frogImg = new Image();
@@ -20,8 +20,8 @@ dangerImg.src = "static/img/danger.png";
 const frog = {
     x: canvas.width / 2,
     y: canvas.height - 100,
-    width: 80,
-    height: 80,
+    width: 100,
+    height: 100,
     moveTo(x) {
         this.x = x - this.width / 2;
     },
@@ -42,7 +42,7 @@ function resizeCanvas() {
     canvas.height = window.innerHeight;
 
     // Задаём ширину и высоту с сохранением пропорций
-    frog.width = canvas.width * 0.1; // Например, 10% от ширины экрана
+    frog.width = canvas.width * 0.2; // Например, 10% от ширины экрана
     frog.height = frog.width / frogAspectRatio;
 
     // Позиционируем по центру и прижимаем вниз с отступом
@@ -73,7 +73,7 @@ resizeCanvas();
 
 // Переменные
 let score = 0;
-let lives = 3;
+let lives = 5;
 
 
 
@@ -94,16 +94,31 @@ function bigRockSpawning() {
         x: Math.random() * (canvas.width - size),
         y: -size,
         width: size,
-        height: size,
+        height: size * 1.5,
         speed: canvas.height * 0.005 + Math.random() * 0.05,
         type: type
     });
 }
 function spawnObject() {
     const type = Math.random() < 0.2 ? OBJECT_TYPES.FLY : OBJECT_TYPES.DANGER;
-    if (Math.random() < 0.1) bigRockSpawning();
-    const size = canvas.width * 0.07; // адаптивный размер
+    if (Math.random() < 0.1) {
+        bigRockSpawning();
+    return;
+    }
+    
+    if (type == OBJECT_TYPES.DANGER){
+    const size = canvas.width * 0.2; // адаптивный размер
     objects.push({
+        x: Math.random() * (canvas.width - size),
+        y: -size,
+        width: size,
+        height: size * 1.5,
+        speed: canvas.height * 0.005 + Math.random(),
+        type: type
+    });
+} else {
+    const size = canvas.width * 0.1; // адаптивный размер
+        objects.push({
         x: Math.random() * (canvas.width - size),
         y: -size,
         width: size,
@@ -111,6 +126,7 @@ function spawnObject() {
         speed: canvas.height * 0.005 + Math.random() * 5,
         type: type
     });
+}
 }
 
 function drawObject(obj) {
@@ -132,6 +148,7 @@ function updateGame() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 // Листья
+/*
     for (let i = leaves.length - 1; i >= 0; i--) {
         const leaf = leaves[i];
         leaf.y += leaf.speed;
@@ -145,7 +162,7 @@ function updateGame() {
             leaves.splice(i, 1); // удаляем ушедшие вверх
         }
     }
-
+*/
     for (let i = objects.length - 1; i >= 0; i--) {
         const obj = objects[i];
         obj.y += obj.speed;
@@ -179,10 +196,10 @@ function updateGame() {
     ctx.textBaseline = "top";
 
 // Очки (слева сверху)
-    ctx.fillText(`🐝 х ${score}`, 10, 10);
+    ctx.fillText(`🍰 ${score}`, 10, 10);
 
 // Жизни (справа сверху)
-    const frogEmoji = '🐸'.repeat(lives);
+    const frogEmoji = '❤️'.repeat(lives);
     const textWidth = ctx.measureText(frogEmoji).width;
     ctx.fillText(frogEmoji, canvas.width - textWidth - 10, 10);
     
@@ -226,12 +243,13 @@ canvas.addEventListener("touchmove", function (e) {
 });
 
 // Спавн объектов
-setInterval(spawnObject, 800);
-setInterval(spawnLeaf, 1000); // каждые 1 сек
+setInterval(spawnObject, 2000);
+//setInterval(bigRockSpawning, 2000);
+// setInterval(spawnLeaf, 1000); // каждые 1 сек
 
 function resetGame() {
     score = 0;
-    lives = 3;
+    lives = 5;
     objects.length = 0;
     frog.x = (canvas.width - frog.width) / 2;
 }
