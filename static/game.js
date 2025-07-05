@@ -3,7 +3,7 @@ const ctx = canvas.getContext("2d");
 const frogMarginBottom = 120;
 const frogAspectRatio = 0.32; // ≈1.36
 
-// Заглушки
+// Загрузка изображений
 const frogImg = new Image();
 frogImg.src = "static/img/frog.png";
 
@@ -17,6 +17,13 @@ flyImg.src = "static/img/fly.png";
 
 const dangerImg = new Image();
 dangerImg.src = "static/img/danger.png";
+
+// Новые изображения для объектов
+const liveImg = new Image();
+liveImg.src = "static/img/live.png";
+
+const bombImg = new Image();
+bombImg.src = "static/img/bomb.png";
 
 const frog = {
     x: canvas.width / 2,
@@ -36,6 +43,8 @@ const objects = [];
 const OBJECT_TYPES = {
     FLY: "fly",
     DANGER: "danger",
+    LIVE: "live",
+    BOMB: "bomb",
     LEAVES: "leaves"
 };
 
@@ -97,13 +106,26 @@ function bigRockSpawning() {
 function spawnObject() {
     if (!isGameRunning) return;
     
-    const type = Math.random() < 0.5 ? OBJECT_TYPES.FLY : OBJECT_TYPES.DANGER;
+    // Вероятности появления объектов
+    const rand = Math.random();
+    let type;
+    
+    if (rand < 0.5) { // 50% муха
+        type = OBJECT_TYPES.FLY;
+    } else if (rand < 0.85) { // 35% опасность
+        type = OBJECT_TYPES.DANGER;
+    } else if (rand < 0.95) { // 10% жизнь
+        type = OBJECT_TYPES.LIVE;
+    } else { // 5% бомба
+        type = OBJECT_TYPES.BOMB;
+    }
+
     if (Math.random() < 0.1) {
         bigRockSpawning();
         return;
     }
     
-    if (type == OBJECT_TYPES.DANGER) {
+    if (type === OBJECT_TYPES.DANGER) {
         const size = canvas.width * 0.2;
         objects.push({
             x: Math.random() * (canvas.width - size),
@@ -113,7 +135,30 @@ function spawnObject() {
             speed: canvas.height * 0.005 * gameSpeed + Math.random(),
             type: type
         });
-    } else {
+    } 
+    else if (type === OBJECT_TYPES.BOMB) {
+        const size = canvas.width * 0.25;
+        objects.push({
+            x: Math.random() * (canvas.width - size),
+            y: -size,
+            width: size,
+            height: size,
+            speed: canvas.height * 0.003 * gameSpeed, // Медленнее других объектов
+            type: type
+        });
+    }
+    else if (type === OBJECT_TYPES.LIVE) {
+        const size = canvas.width * 0.15;
+        objects.push({
+            x: Math.random() * (canvas.width - size),
+            y: -size,
+            width: size,
+            height: size,
+            speed: canvas.height * 0.006 * gameSpeed, // Быстрее других объектов
+            type: type
+        });
+    }
+    else { // OBJECT_TYPES.FLY
         const size = canvas.width * 0.1;
         objects.push({
             x: Math.random() * (canvas.width - size),
@@ -127,7 +172,23 @@ function spawnObject() {
 }
 
 function drawObject(obj) {
-    const img = obj.type === OBJECT_TYPES.FLY ? flyImg : dangerImg;
+    let img;
+    switch(obj.type) {
+        case OBJECT_TYPES.FLY:
+            img = flyImg;
+            break;
+        case OBJECT_TYPES.DANGER:
+            img = dangerImg;
+            break;
+        case OBJECT_TYPES.LIVE:
+            img = liveImg;
+            break;
+        case OBJECT_TYPES.BOMB:
+            img = bombImg;
+            break;
+        default:
+            img = flyImg;
+    }
     ctx.drawImage(img, obj.x, obj.y, obj.width, obj.height);
 }
 
@@ -273,15 +334,26 @@ function updateGame() {
         drawObject(obj);
 
         if (checkCollision(obj)) {
-            if (obj.type === OBJECT_TYPES.FLY) {
-                score++;
-            } else {
-                lives--;
-                if (lives <= 0) {
-                    showEndMessage("Игра окончена 💔");
-                    return;
-                }
+            switch(obj.type) {
+                case OBJECT_TYPES.FLY:
+                    score++;
+                    break;
+                case OBJECT_TYPES.DANGER:
+                    lives--;
+                    break;
+                case OBJECT_TYPES.LIVE:
+                    lives = Math.min(lives + 1, 5); // Максимум 5 жизней
+                    break;
+                case OBJECT_TYPES.BOMB:
+                    lives = Math.max(lives - 2, 0); // Отнимаем 2 жизни
+                    break;
             }
+            
+            if (lives <= 0) {
+                showEndMessage("Игра окончена 💔");
+                return;
+            }
+            
             objects.splice(i, 1);
         } else if (obj.y > canvas.height) {
             objects.splice(i, 1);
@@ -290,13 +362,17 @@ function updateGame() {
 
     frog.draw();
 
+    // Отрисовка счета и жизней
     ctx.fillStyle = "black";
     ctx.font = `${canvas.width * 0.04}px Arial`;
     ctx.textBaseline = "top";
     ctx.fillText(`🍰 ${score}`, 10, 10);
-    const frogEmoji = '❤️'.repeat(lives);
-    const textWidth = ctx.measureText(frogEmoji).width;
-    ctx.fillText(frogEmoji, canvas.width - textWidth - 10, 10);
+    
+    // Рисуем сердца вместо текстовых эмодзи
+    const heartSize = canvas.width * 0.04;
+    for (let i = 0; i < lives; i++) {
+        ctx.drawImage(liveImg, canvas.width - (i + 1) * (heartSize + 5), 10, heartSize, heartSize);
+    }
 }
 
 function gameLoop() {

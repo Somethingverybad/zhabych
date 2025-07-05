@@ -10,7 +10,6 @@ app = Flask(__name__)
 BASE_DIR = Path(__file__).parent
 app.config['DATABASE'] = str(BASE_DIR / 'instance' / 'scores.db')
 app.config['UPLOAD_FOLDER'] = 'uploads'
-app.config['SECRET_KEY'] = 'your-secret-key-here'  # Замените на реальный секретный ключ
 
 # 🔐 Telegram настройки
 TELEGRAM_BOT_TOKEN = "5860471491:AAGbYiQVM2wXkRk1PRct6ZnMchtkEqeBRyk"
